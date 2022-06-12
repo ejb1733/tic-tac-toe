@@ -1,5 +1,32 @@
-#gameboard div {
+body {
+    display: flex;
+    justify-content: center;
+    margin-top: 64px;
+}
+
+#gameboard {
+    display: flex;
+    flex-wrap: wrap;
     width: 300px;
     height: 300px;
-    border: 2px solid green;
+}
+
+#gameboard div {
+    width: 86px;
+    height: 86px;
+    margin: 2px;
+    text-align: center;
+    font-size: 24px;
+}
+
+.empty {
+    border: 2px solid black;
+}
+
+.xsquare {
+    border: 2px solid red;
+}
+
+.osquare {
+    border: 2px solid blue;
 }

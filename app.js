@@ -1,26 +1,27 @@
 const gbdiv = document.querySelector('#gameboard');
 
 const gameBoard = (() => {
-    let gameboard = ['', '', '', 
-                     '', '', '',
-                     '', '', '',];
+    let gameboard = ['', 'o', '', 
+                     'x', 'o', '',
+                     '', '', 'x',];
     const render = () => {
-        gameboard.forEach(e => {
-            if (e == '') {
-                const emptySquare = document.createElement('div');
-                emptySquare.setAttribute('class', 'empty');
-                gbdiv.appendChild(emptySquare);
+        for (let i = 0; i < 9; i++) {
+            const square = document.createElement('div');
+            if (gameboard[i] == '') {
+                square.setAttribute('class', 'empty');
+                square.setAttribute('onclick', `displayController.play(${i})`);
+                gbdiv.appendChild(square);
                 console.log('empty');
-            } else if (e == 'x') {
-                const xSquare = document.createElement('div');
-                xSquare.setAttribute('class', 'xsquare');
-                gbdiv.appendChild(xSquare);
+            } else if (gameboard[i] == 'x') {
+                square.setAttribute('class', 'xsquare');
+                square.innerText = 'X';
+                gbdiv.appendChild(square);
             } else {
-                const oSquare = document.createElement('div')
-                oSquare.setAttribute('class', 'osquare');
-                gbdiv.appendChild(oSquare);
+                square.setAttribute('class', 'osquare');
+                square.innerText = 'O';
+                gbdiv.appendChild(square);
             }
-        });
+        };
     }
     return {
         gameboard,
@@ -28,12 +29,30 @@ const gameBoard = (() => {
     };
 })();
 
-const players = (name, choice) => {
+const player = (name, choice) => {
     return {name, choice};
 }
 
-const displayController = (() => {
+const player1 = player('me', 'x');
+const player2 = player('they', 'o');
 
+const players = [
+    player1,
+    player2,
+]
+
+let currPlayer = players[1];
+
+const displayController = (() => {
+    const play = (index) => {
+        gameBoard.gameboard[index] = currPlayer.choice;
+        gameBoard.render();
+        console.log('k');
+        currPlayer === players[0] ? currPlayer = players[1] : currPlayer = players[0];
+    }
+    return {
+        play,
+    }
 })();
 
 gameBoard.render();
