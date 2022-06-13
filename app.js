@@ -11,7 +11,7 @@ const gameBoard = (() => {
             const square = document.createElement('div');
             square.setAttribute('class', 'empty');
             square.setAttribute('id', `sq${i}`);
-            square.setAttribute('onclick', `displayController.play(${i})`);
+            square.setAttribute('onclick', `displayController.render(${i})`);
             gbdiv.appendChild(square);
             console.log('render empty square');
         }
@@ -38,20 +38,27 @@ const players = [
 let currPlayer = players[0];
 
 const displayController = (() => {
-    const play = (index) => {
-        gameBoard.gameboard[index] = currPlayer.choice;
-        render(index);
-        console.log(`rendered an ${gameBoard.gameboard[index]} at ${index}`);
-        currPlayer === players[0] ? currPlayer = players[1] : currPlayer = players[0];
-    }
 
     const render = (index) => {
-        let toChange = document.querySelector(`#sq${index}`);
-        toChange.innerText = gameBoard.gameboard[index];
+        if (isGameOver()) {
+            return;
+        } else {
+            let toChange = document.querySelector(`#sq${index}`);
+            if (toChange.innerText === '') {
+                gameBoard.gameboard[index] = currPlayer.choice;
+                toChange.innerText = gameBoard.gameboard[index];
+                console.log(`rendered an ${gameBoard.gameboard[index]} at ${index}`);
+                currPlayer === players[0] ? currPlayer = players[1] : currPlayer = players[0];
+            }
+        }
+    }
+
+    const isGameOver = () => {
+
     }
 
     return {
-        play,
+        render,
     }
 })();
 
