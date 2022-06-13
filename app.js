@@ -1,31 +1,44 @@
 const gbdiv = document.querySelector('#gameboard');
+const body = document.querySelector('body');
 
 const gameBoard = (() => {
     let gameboard = ['', 'o', '', 
                      'x', 'o', '',
                      '', '', 'x',];
-    const render = () => {
+    // const render = () => {
+    //     for (let i = 0; i < 9; i++) {
+    //         const square = document.createElement('div');
+    //         if (gameboard[i] == '') {
+    //             square.setAttribute('class', 'empty');
+    //             square.setAttribute('onclick', `displayController.play(${i})`);
+    //             gbdiv.appendChild(square);
+    //             console.log('empty');
+    //         } else if (gameboard[i] == 'x') {
+    //             square.setAttribute('class', 'xsquare');
+    //             square.innerText = 'X';
+    //             gbdiv.appendChild(square);
+    //         } else {
+    //             square.setAttribute('class', 'osquare');
+    //             square.innerText = 'O';
+    //             gbdiv.appendChild(square);
+    //         }
+    //     };
+    // }
+
+    const setup = () => {
         for (let i = 0; i < 9; i++) {
             const square = document.createElement('div');
-            if (gameboard[i] == '') {
-                square.setAttribute('class', 'empty');
-                square.setAttribute('onclick', `displayController.play(${i})`);
-                gbdiv.appendChild(square);
-                console.log('empty');
-            } else if (gameboard[i] == 'x') {
-                square.setAttribute('class', 'xsquare');
-                square.innerText = 'X';
-                gbdiv.appendChild(square);
-            } else {
-                square.setAttribute('class', 'osquare');
-                square.innerText = 'O';
-                gbdiv.appendChild(square);
-            }
-        };
+            square.setAttribute('class', 'empty');
+            square.setAttribute('id', `sq${i}`);
+            square.setAttribute('onclick', `displayController.play(${i})`);
+            gbdiv.appendChild(square);
+            console.log('render empty square');
+        }
     }
+
     return {
         gameboard,
-        render,
+        setup,
     };
 })();
 
@@ -41,18 +54,24 @@ const players = [
     player2,
 ]
 
-let currPlayer = players[1];
+let currPlayer = players[0];
 
 const displayController = (() => {
     const play = (index) => {
         gameBoard.gameboard[index] = currPlayer.choice;
-        gameBoard.render();
-        console.log('k');
+        render(index);
+        console.log(`rendered an ${gameBoard.gameboard[index]} at ${index}`);
         currPlayer === players[0] ? currPlayer = players[1] : currPlayer = players[0];
     }
+
+    const render = (index) => {
+        let toChange = document.querySelector(`#sq${index}`);
+        toChange.innerText = gameBoard.gameboard[index];
+    }
+
     return {
         play,
     }
 })();
 
-gameBoard.render();
+gameBoard.setup();
