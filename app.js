@@ -5,25 +5,6 @@ const gameBoard = (() => {
     let gameboard = ['', 'o', '', 
                      'x', 'o', '',
                      '', '', 'x',];
-    // const render = () => {
-    //     for (let i = 0; i < 9; i++) {
-    //         const square = document.createElement('div');
-    //         if (gameboard[i] == '') {
-    //             square.setAttribute('class', 'empty');
-    //             square.setAttribute('onclick', `displayController.play(${i})`);
-    //             gbdiv.appendChild(square);
-    //             console.log('empty');
-    //         } else if (gameboard[i] == 'x') {
-    //             square.setAttribute('class', 'xsquare');
-    //             square.innerText = 'X';
-    //             gbdiv.appendChild(square);
-    //         } else {
-    //             square.setAttribute('class', 'osquare');
-    //             square.innerText = 'O';
-    //             gbdiv.appendChild(square);
-    //         }
-    //     };
-    // }
 
     const setup = () => {
         for (let i = 0; i < 9; i++) {
