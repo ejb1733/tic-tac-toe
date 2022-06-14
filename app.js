@@ -55,7 +55,7 @@ const displayController = (() => {
     const isGameOver = () => {
         checkRows();
         checkColumns();
-        // checkDiagonals();
+        checkDiagonals();
     }
 
     const checkRows = () => {
@@ -97,6 +97,18 @@ const displayController = (() => {
                 }
             }
         });
+    }
+
+    const checkDiagonals = () => {
+        let gb = gameBoard.gameboard;
+        if (gb[4] !== '') {
+            if (gb[0] == gb[4] && gb[0] == gb[8]) {
+                console.log(`WIN ON 1st DIAGONAL!`);
+            }
+            if (gb[2] == gb[4] && gb[2] == gb[6]) {
+                console.log('WIN ON 2nd DIAGONAL!')
+            }
+        }
     }
 
     const gameOver = () => {
