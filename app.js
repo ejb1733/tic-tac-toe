@@ -69,10 +69,10 @@ const displayController = (() => {
             rows.push(row);
             i += 3;
         }
-        rows.forEach(row => {
+        rows.forEach((row, i) => {
             if (row[0] == row[1] && row[0] == row[2]) {
                 if (row[0] !== '') {
-                    console.log('DUB');
+                    console.log(`WIN ON ROW ${i + 1}`);
                 }
             }
         });
