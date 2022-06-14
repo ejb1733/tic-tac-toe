@@ -54,7 +54,7 @@ const displayController = (() => {
 
     const isGameOver = () => {
         checkRows();
-        // checkColumns();
+        checkColumns();
         // checkDiagonals();
     }
 
@@ -73,6 +73,27 @@ const displayController = (() => {
             if (row[0] == row[1] && row[0] == row[2]) {
                 if (row[0] !== '') {
                     console.log(`WIN ON ROW ${i + 1}`);
+                }
+            }
+        });
+    }
+
+    const checkColumns = () => {
+        let columns = [];
+        let i = 0;
+        while (i < 3) {
+            let column = [];
+            column.push(gameBoard.gameboard[i]);
+            column.push(gameBoard.gameboard[i + 3]);
+            column.push(gameBoard.gameboard[i + 6]);
+            console.log(column);
+            columns.push(column);
+            i += 1;
+        }
+        columns.forEach((column, i) => {
+            if (column[0] == column[1] && column[0] == column[2]) {
+                if (column[0] !== '') {
+                    console.log(`WIN ON COLUMN ${i + 1}`);
                 }
             }
         });
