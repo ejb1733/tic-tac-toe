@@ -1,19 +1,14 @@
 const gbdiv = document.querySelector('#gameboard');
 const body = document.querySelector('body');
 const restartbtn = document.createElement('button');
+const winDiv = document.createElement('p');
+
+let numPlays = 0;
+
+winDiv.setAttribute('id', 'windiv');
 
 restartbtn.innerText = 'reset';
 restartbtn.setAttribute('id', 'restartbtn');
-restartbtn.addEventListener('click', () => {
-  while (gbdiv.firstChild) {
-    gbdiv.removeChild(gbdiv.firstChild);
-  }
-  displayController.numPlays = 0;
-  gameBoard.gameboard = ['', '', '', '', '', '', '', '', ''];
-  setTimeout(() => {
-    gameBoard.setup();
-  }, 1000);
-});
 
 const gameBoard = (() => {
   let gameboard = ['', '', '', '', '', '', '', '', ''];
@@ -26,7 +21,9 @@ const gameBoard = (() => {
       square.setAttribute('onclick', `displayController.render(${i})`);
       gbdiv.appendChild(square);
     }
+    gbdiv.appendChild(winDiv);
     gbdiv.appendChild(restartbtn);
+    winDiv.style.display = 'none';
     restartbtn.style.display = 'none';
     console.log('setup board successfully');
   };
@@ -49,7 +46,6 @@ const players = [player1, player2];
 let currPlayer = players[0];
 
 const displayController = (() => {
-  let numPlays = 0;
   let winMessage = '';
 
   const render = (index) => {
@@ -67,7 +63,7 @@ const displayController = (() => {
 
   const isGameOver = () => {
     if (numPlays == 9) {
-      gameOver();
+      gameOver('All tiles full!');
     }
     checkRows();
     checkColumns();
@@ -89,7 +85,7 @@ const displayController = (() => {
       if (row[0] == row[1] && row[0] == row[2]) {
         if (row[0] !== '') {
           winMessage = `WIN ON ROW ${i + 1}`;
-          gameOver();
+          gameOver(winMessage);
         }
       }
     });
@@ -111,7 +107,7 @@ const displayController = (() => {
       if (column[0] == column[1] && column[0] == column[2]) {
         if (column[0] !== '') {
           winMessage = `WIN ON COLUMN ${i + 1}`;
-          gameOver();
+          gameOver(winMessage);
         }
       }
     });
@@ -122,21 +118,34 @@ const displayController = (() => {
     if (gb[4] !== '') {
       if (gb[0] == gb[4] && gb[0] == gb[8]) {
         winMessage = `WIN ON 1st DIAGONAL!`;
-        gameOver();
+        gameOver(winMessage);
       }
       if (gb[2] == gb[4] && gb[2] == gb[6]) {
         winMessage = 'WIN ON 2nd DIAGONAL!';
-        gameOver();
+        gameOver(winMessage);
       }
     }
   };
 
-  const gameOver = () => {
+  const gameOver = (winMessage) => {
+    winDiv.innerText = winMessage;
+    winDiv.style.display = 'block';
     restartbtn.style.display = 'block';
   };
   return {
     render,
   };
 })();
+
+restartbtn.addEventListener('click', () => {
+  while (gbdiv.firstChild) {
+    gbdiv.removeChild(gbdiv.firstChild);
+  }
+  numPlays = 0;
+  gameBoard.gameboard = ['', '', '', '', '', '', '', '', ''];
+  setTimeout(() => {
+    gameBoard.setup();
+  }, 1000);
+});
 
 gameBoard.setup();
