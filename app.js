@@ -84,7 +84,7 @@ const displayController = (() => {
     rows.forEach((row, i) => {
       if (row[0] == row[1] && row[0] == row[2]) {
         if (row[0] !== '') {
-          winMessage = `WIN ON ROW ${i + 1}`;
+          winMessage = `WE HAVE A WINNER ON ROW ${i + 1}`;
           gameOver(winMessage);
         }
       }
